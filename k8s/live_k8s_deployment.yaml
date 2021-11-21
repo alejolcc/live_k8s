@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: live-k8s
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: live-k8s
+
+  template:
+    metadata:
+      labels:
+        app: live-k8s
+    spec:
+      containers:
+      - name: phoenix-live-k8s
+        # command: [ "mix" ]
+        # args: ["phx.server"]
+        command: ["elixir"]
+        args: [
+          "--name", 
+          "live-k8s@$(MY_POD_IP)", 
+          "--cookie","$(ERLANG_COOKIE)", 
+          "-S","mix",
+          "phx.server"
+        ]
+        image: test:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 4000
+        env:
+        - name: PORT
+          value: "4000"
+        - name: PHOENIX_CHAT_HOST
+          value: "localhost"
+        - name: ERLANG_COOKIE
+          value: "secret"
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+---
+# load balancer to expose the app
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: live-k8s-lb
+  namespace: default
+spec:
+  type: LoadBalancer
+  selector:
+    app: live-k8s
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 4000
+---
+# headless service needed for libcluster
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: live-k8s-nodes
+  namespace: default
+spec:
+  clusterIP: None
+  selector:
+    app: live-k8s
+  ports:
+    - name: epmd
+      port: 4369
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: live-k8s-ports
+#   labels:
+#     app: live-k8s
+# spec:
+#   type: NodePort
+#   ports:
+#    - port: 4000
+#      name: http
+#      targetPort: 4000
+#   selector:
+#    app: live-k8s
