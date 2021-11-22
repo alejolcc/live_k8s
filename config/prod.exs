@@ -33,7 +33,7 @@ config :libcluster,
       strategy: Elixir.Cluster.Strategy.Kubernetes.DNS,
       config: [
         service: "live-k8s-nodes",
-        application_name: "live-k8s"
+        application_name: "live_k8s"
       ]
     ]
   ]

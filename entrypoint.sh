@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /opt/${APP_NAME}/bin/${APP_NAME} start >> /var/log/${APP_NAME}.log 2>&1
+exec /opt/live_k8s/bin/live_k8s start
