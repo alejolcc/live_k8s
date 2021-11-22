@@ -8,19 +8,17 @@ defmodule LiveK8s.Application do
   @impl true
   def start(_type, _args) do
     topologies = Application.get_env(:libcluster, :topologies)
+    myself = Node.self()
 
     children = [
       {Cluster.Supervisor, [topologies, [name: LiveK8s.ClusterSupervisor]]},
-      # Start the Ecto repository
       LiveK8s.Repo,
-      # Start the Telemetry supervisor
       LiveK8sWeb.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: LiveK8s.PubSub},
-      # Start the Endpoint (http/https)
-      LiveK8sWeb.Endpoint
-      # Start a worker by calling: LiveK8s.Worker.start_link(arg)
-      # {LiveK8s.Worker, arg}
+
+      LiveK8sWeb.Endpoint,
+      # TODO: This broke once because Nodes is not defined yet
+      {Task, fn -> Nodes.broadcast(myself, :new_node) end}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
