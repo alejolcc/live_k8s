@@ -1,5 +1,5 @@
 defmodule LiveK8sWeb.NodesLive do
-  use Phoenix.LiveView
+  use LiveK8sWeb, :live_view
 
   require Logger
 
@@ -9,7 +9,6 @@ defmodule LiveK8sWeb.NodesLive do
     ~H"""
     Myself: <%= Jason.encode!(@myself) %>
     Current nodes: <%= Jason.encode!(@nodes) %>
-    count: <%= @test %>
     """
   end
 

@@ -51,8 +51,7 @@ if config_env() in [:prod, :dev] do
   #   ]
 
   config :live_k8s, LiveK8sWeb.Endpoint,
-    url: [host: "localhost", port: System.get_env("PORT", "4000") |> String.to_integer()],
-    http: [ip: {127, 0, 0, 1}, port: System.get_env("PORT", "4000") |> String.to_integer()],
+    http: [port: System.get_env("PORT", "4000") |> String.to_integer()],
     secret_key_base: "81mJnB8ssm8pSsogwShfDMwNrl0utoHAlYCBXaKJPn7HBYmZ7mSJ2PN+fFusXeYM",
     render_errors: [view: LiveK8sWeb.ErrorView, accepts: ~w(html json), layout: false],
     pubsub_server: LiveK8s.PubSub,

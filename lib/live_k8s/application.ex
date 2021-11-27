@@ -18,7 +18,7 @@ defmodule LiveK8s.Application do
 
       LiveK8sWeb.Endpoint,
       # TODO: This broke once because Nodes is not defined yet
-      {Task, fn -> Nodes.broadcast(myself, :new_node) end}
+      {Task, fn -> broadcast(myself) end}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -33,5 +33,10 @@ defmodule LiveK8s.Application do
   def config_change(changed, _new, removed) do
     LiveK8sWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  # TODO: Save the nodes_topic on persisten_term
+  defp broadcast(node) do
+    Phoenix.PubSub.broadcast(LiveK8s.PubSub, "nodes_topic", {:new_node, node})
   end
 end
