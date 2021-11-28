@@ -38,7 +38,11 @@ defmodule LiveK8sWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: LiveK8sWeb.Telemetry
+      live_dashboard "/dashboard",
+      additional_pages: [
+        broadway: {BroadwayDashboard, pipelines: [LiveK8s.Broadway]}
+      ],
+      metrics: LiveK8sWeb.Telemetry
     end
   end
 

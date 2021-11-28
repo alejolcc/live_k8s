@@ -12,14 +12,14 @@ defmodule LiveK8s.Broadway do
         concurrency: 1
       ],
       processors: [
-        default: [concurrency: 500]
+        default: [concurrency: 5]
       ]
     )
   end
 
   @impl true
   def handle_message(_processor, message, _context) do
-    IO.inspect message
+    # IO.inspect message
     message
   end
 
