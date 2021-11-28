@@ -11,11 +11,11 @@ defmodule LiveK8s.Application do
     myself = Node.self()
 
     children = [
+      {Phoenix.PubSub, name: LiveK8s.PubSub},
       {Cluster.Supervisor, [topologies, [name: LiveK8s.ClusterSupervisor]]},
       LiveK8s.Repo,
       LiveK8sWeb.Telemetry,
-      {Phoenix.PubSub, name: LiveK8s.PubSub},
-
+      {LiveK8s.Broadway, []},
       LiveK8sWeb.Endpoint,
       # TODO: This broke once because Nodes is not defined yet
       {Task, fn -> broadcast(myself) end}

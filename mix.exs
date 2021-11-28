@@ -49,7 +49,8 @@ defmodule LiveK8s.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:libcluster, "~> 3.0"}
+      {:libcluster, "~> 3.0"},
+      {:broadway, "~> 1.0"}
     ]
   end
 
