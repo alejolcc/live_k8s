@@ -13,7 +13,7 @@ defmodule LiveK8s.Counter do
       len: 0
     }
 
-    {:producer, state}
+    {:producer, state, buffer_size: :infinity}
   end
 
   def handle_demand(demand, state) when demand > 0 do

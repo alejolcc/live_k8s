@@ -12,15 +12,26 @@ defmodule LiveK8s.Broadway do
         concurrency: 1
       ],
       processors: [
-        default: [concurrency: 5]
+        default: [concurrency: 100]
+      ],
+      batchers: [
+        default: [concurrency: 100, batch_size: 100],
       ]
     )
   end
 
   @impl true
   def handle_message(_processor, message, _context) do
-    # IO.inspect message
-    message
+    Message.update_data(message, fn data ->
+      Map.to_list(data)
+    end)
+  end
+
+  @impl true
+  def handle_batch(_batch, messages, _batch_info, _context) do
+    events = Enum.map(messages, & &1.data)
+    LiveK8s.Repo.insert_all(LiveK8s.Tests.Event, events)
+    messages
   end
 
   def transform(event, _opts) do

@@ -26,7 +26,8 @@ defmodule LiveK8sWeb.NodesLive do
   end
 
   def handle_info({:new_node, new_node}, socket) do
-    Logger.debug("NEW NODE #{new_node}")
+    Logger.info("NEW NODE #{new_node}")
+    Node.monitor(new_node, true)
 
     node_list = Node.list()
     socket = assign(socket, :nodes, node_list)
@@ -34,12 +35,11 @@ defmodule LiveK8sWeb.NodesLive do
     {:noreply, socket}
   end
 
-  def handle_info(_asd, socket) do
-
-    count = socket.assign.test + 1
-    socket = assign(socket, :count, count)
+  def handle_info({:nodedown, node}, socket) do
+    Logger.info("Node Down #{node}")
+    node_list = Node.list()
+    socket = assign(socket, :nodes, node_list)
 
     {:noreply, socket}
   end
-
 end
