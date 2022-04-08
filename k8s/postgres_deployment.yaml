@@ -38,10 +38,10 @@ metadata:
 spec:
   # type: NodePort
   ports:
-   - port: 5432
-     targetPort: 5432
+    - port: 5432
+      targetPort: 5432
   selector:
-   app: postgres
+    app: postgres
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -53,3 +53,32 @@ data:
   POSTGRES_DB: live_k8s_dev
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgres-pv-volume
+  labels:
+    type: local
+    app: postgres
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgres-pv-claim
+  labels:
+    app: postgres
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
