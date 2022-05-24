@@ -99,3 +99,14 @@ header nav a {
     margin: 2rem 1rem;
   }
 }
+
+.circle {
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
+  border-radius: 50%;
+  font-size: 15px;
+  color: rgb(14, 13, 13);
+  text-align: center;
+  background: rgb(60, 255, 0)
+}

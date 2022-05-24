@@ -6,9 +6,16 @@ defmodule LiveK8sWeb.NodesLive do
   alias LiveK8s.Nodes
 
   def render(assigns) do
+    # Myself: <%= Jason.encode!(@myself) %>
+    # Current nodes: <%= Jason.encode!(@nodes) %>
     ~H"""
-    Myself: <%= Jason.encode!(@myself) %>
-    Current nodes: <%= Jason.encode!(@nodes) %>
+    <h3>Server</h3>
+    <.circle node_name={@myself} />
+
+    <h3>Nodes</h3>
+    <%= for node <- @nodes do %>
+      <.circle node_name={node} />
+    <% end %>
     """
   end
 
@@ -41,5 +48,11 @@ defmodule LiveK8sWeb.NodesLive do
     socket = assign(socket, :nodes, node_list)
 
     {:noreply, socket}
+  end
+
+  def circle(assigns) do
+    ~H"""
+    <div class="circle"> <%= assigns.node_name %> </div>
+    """
   end
 end

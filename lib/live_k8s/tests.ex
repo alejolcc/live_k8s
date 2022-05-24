@@ -90,6 +90,13 @@ defmodule LiveK8s.Tests do
   end
 
   @doc """
+  Deletes all events.
+  """
+  def delete_all_events() do
+    Repo.delete_all(LiveK8s.Tests.Event)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking event changes.
 
   ## Examples

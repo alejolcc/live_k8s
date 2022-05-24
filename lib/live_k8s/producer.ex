@@ -6,7 +6,7 @@ defmodule LiveK8s.Counter do
   def init(_opts) do
     queue = :queue.new()
     :timer.send_interval(100, self(), {:flush, 10000})
-    Phoenix.PubSub.subscribe(LiveK8s.PubSub, "user:123")
+    subscribe()
 
     state = %{
       queue: queue,
@@ -38,5 +38,9 @@ defmodule LiveK8s.Counter do
     }
 
     {:noreply, [], state}
+  end
+
+  defp subscribe() do
+    Phoenix.PubSub.subscribe(LiveK8s.PubSub, "producer_topic")
   end
 end
