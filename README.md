@@ -1,19 +1,16 @@
-# LiveK8s
+# Live_k8s
+Demo project to play around Erlang distribution, k8s & broadway
 
-To start your Phoenix server:
+The idea is to have one node that act as Server to be conected with a node from 
+https://github.com/alejolcc/live_k8s_node
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+The conection is made via Erlang Distribution using the popular lib Libcluster (https://github.com/bitwalker/libcluster)
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+This server have a broadway to handle events that comes from the node via Phoenix PubSub, and write to the DB in batch to improve the performance
+It have a live_view to see the conected nodes, and a broadway dashboard to see the load of the pipelines
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+To see the connected nodes you can visit
+localhost:4000/nodes
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+To see the dashboard nodes you can visit
+localhost:4000/dashboard
