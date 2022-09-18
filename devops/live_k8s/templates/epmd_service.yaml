@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: live-k8s-nodes
+spec:
+  clusterIP: None
+  selector:
+    app: live-k8s
+  ports:
+    - name: epmd
+      port: 4369

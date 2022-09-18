@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: live-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: live-k8s
+
+  template:
+    metadata:
+      labels:
+        app: live-k8s
+    spec:
+      containers:
+      - name: phoenix-live-k8s
+        image: live-k8s-server:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 4000
+        env:
+        - name: PORT
+          value: "4000"
+        - name: ERL_DIST_PORT
+          value: "8001"
+        - name: RELEASE_COOKIE
+          value: secret-cookie
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP

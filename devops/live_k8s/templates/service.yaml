@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: live-k8s-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: live-k8s
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 4000
