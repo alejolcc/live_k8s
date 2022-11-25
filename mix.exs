@@ -33,6 +33,7 @@ defmodule LiveK8s.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:phoenix, "~> 1.6", override: true},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
@@ -63,6 +64,7 @@ defmodule LiveK8s.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"],
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],

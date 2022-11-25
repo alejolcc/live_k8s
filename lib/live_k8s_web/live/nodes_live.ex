@@ -9,13 +9,15 @@ defmodule LiveK8sWeb.NodesLive do
     # Myself: <%= Jason.encode!(@myself) %>
     # Current nodes: <%= Jason.encode!(@nodes) %>
     ~H"""
-    <h3>Server</h3>
+
+    <h3 class="text-3xl font-bold mb-8">Server</h3>
     <.circle node_name={@myself} />
 
-    <h3>Nodes</h3>
+    <h3 class="text-3xl font-bold mb-8">Nodes</h3>
     <%= for node <- @nodes do %>
       <.circle node_name={node} />
     <% end %>
+
     """
   end
 
@@ -52,7 +54,9 @@ defmodule LiveK8sWeb.NodesLive do
 
   def circle(assigns) do
     ~H"""
-    <div class="circle"> <%= assigns.node_name %> </div>
+    <div class="w-40 h-40 rounded-full border-2 border-black flex justify-center items-center">
+         <p><%= assigns.node_name %></p>
+    </div>
     """
   end
 end
