@@ -17,6 +17,7 @@ defmodule LiveK8sWeb.Router do
   scope "/", LiveK8sWeb do
     pipe_through :browser
     live "/nodes", NodesLive
+    live "/", Index
 
     get "/", PageController, :index
   end

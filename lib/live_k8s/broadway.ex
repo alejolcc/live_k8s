@@ -31,6 +31,7 @@ defmodule LiveK8s.Broadway do
   def handle_batch(_batch, messages, _batch_info, _context) do
     events = Enum.map(messages, & &1.data)
     LiveK8s.Repo.insert_all(LiveK8s.Tests.Event, events)
+    LiveK8s.Tests.broadcast(events)
     messages
   end
 

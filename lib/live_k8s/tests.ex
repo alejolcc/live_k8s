@@ -8,6 +8,8 @@ defmodule LiveK8s.Tests do
 
   alias LiveK8s.Tests.Event
 
+  @events_topic "events"
+
   @doc """
   Returns the list of events.
 
@@ -107,5 +109,14 @@ defmodule LiveK8s.Tests do
   """
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
+  end
+
+  def subscribe() do
+    Phoenix.PubSub.subscribe(LiveK8s.PubSub, @events_topic)
+  end
+
+  def broadcast(events) do
+    Phoenix.PubSub.broadcast(LiveK8s.PubSub, @events_topic, {:new_events, events})
+    :ok
   end
 end
