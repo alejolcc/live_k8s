@@ -31,7 +31,7 @@ config :live_k8s, LiveK8sWeb.Endpoint,
 config :libcluster,
   topologies: [
     live_k8s: [
-      strategy: Cluster.Strategy.Gossip
+      strategy: Cluster.Strategy.LocalEpmd
     ]
   ]
 
@@ -40,7 +40,6 @@ config :live_k8s, LiveK8sWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
       ~r"lib/live_k8s_web/(live|views)/.*(ex)$",
       ~r"lib/live_k8s_web/templates/.*(eex)$"
     ]

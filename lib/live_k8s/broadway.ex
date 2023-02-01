@@ -15,7 +15,7 @@ defmodule LiveK8s.Broadway do
         default: [concurrency: 100]
       ],
       batchers: [
-        default: [concurrency: 100, batch_size: 100],
+        default: [concurrency: 100, batch_size: 100]
       ]
     )
   end

@@ -11,8 +11,9 @@ defmodule LiveK8sWeb.Index do
     end
 
     events = Tests.list_events()
+
     assigns = [
-      events: events,
+      events: events
     ]
 
     {:ok, assign(socket, assigns)}
@@ -24,5 +25,4 @@ defmodule LiveK8sWeb.Index do
 
     {:noreply, socket}
   end
-
 end

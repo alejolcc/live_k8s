@@ -13,7 +13,6 @@ defmodule LiveK8s.Commands do
   We are going to use the RPC call alternative because we already used the pubsub
   """
 
-
   def broadcast_send(n) do
     Node.list(:connected)
     |> Enum.each(fn node ->

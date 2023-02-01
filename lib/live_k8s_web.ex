@@ -22,7 +22,6 @@ defmodule LiveK8sWeb do
       use Phoenix.Controller, namespace: LiveK8sWeb
 
       import Plug.Conn
-      import LiveK8sWeb.Gettext
       alias LiveK8sWeb.Router.Helpers, as: Routes
     end
   end
@@ -72,7 +71,6 @@ defmodule LiveK8sWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import LiveK8sWeb.Gettext
     end
   end
 
@@ -88,7 +86,6 @@ defmodule LiveK8sWeb do
       import Phoenix.View
 
       import LiveK8sWeb.ErrorHelpers
-      import LiveK8sWeb.Gettext
       alias LiveK8sWeb.Router.Helpers, as: Routes
     end
   end
